@@ -11,7 +11,7 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "BuildSync - BIM Management Platform",
   description: "Comprehensive BIM management and coordination platform for construction projects",
-  generator: "v0.app",
+  generator: "shah",
   icons: {
     icon: [
       {

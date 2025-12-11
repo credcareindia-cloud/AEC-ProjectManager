@@ -23,69 +23,39 @@ export function Sidebar() {
   const router = useRouter()
   const { selectedProject, setSelectedProject } = useProject()
 
-  const menuItems = [
-    {
-      label: "Overview",
-      href: "/overview",
-      icon: Home,
-    },
-    {
-      label: "Clash Detection",
-      href: "/design/clashes",
-      icon: Zap,
-    },
-    {
-      label: "LOIN",
-      href: "/design/loin",
-      icon: BookOpen,
-    },
-    {
-      label: "LOD",
-      href: "/design/lod",
-      icon: CheckSquare,
-    },
-    {
-      label: "QAQC",
-      href: "/design/qaqc",
-      icon: CheckSquare,
-    },
-    {
-      label: "Progress",
-      href: "/planning/progress",
-      icon: TrendingUp,
-    },
-    {
-      label: "S-Curve",
-      href: "/planning/scurve",
-      icon: PieChart,
-    },
-    {
-      label: "Resources",
-      href: "/planning/resources",
-      icon: Users,
-    },
-    {
-      label: "Financials",
-      href: "/planning/financials",
-      icon: DollarSign,
-    },
-    {
-      label: "Issues",
-      href: "/issues",
-      icon: AlertCircle,
-    },
+  const designItems = [
+    { label: "Dashboard", href: "/design", icon: Home },
+    { label: "Fragments", href: "/design/fragments", icon: Cube },
+    { label: "LOD Specifications", href: "/design/lod", icon: CheckSquare },
+    { label: "LOIN Requirements", href: "/design/loin", icon: BookOpen },
+    { label: "Clash Detection", href: "/design/clashes", icon: Zap },
+    { label: "BIM Issues", href: "/design/bim-issues", icon: AlertCircle },
+    { label: "Interoperability", href: "/design/interoperability", icon: Cube },
+    { label: "Weightage", href: "/design/weightage", icon: TrendingUp },
+    { label: "QA/QC", href: "/design/qaqc", icon: CheckSquare },
+    { label: "Model Health", href: "/design/model-health", icon: AlertCircle },
   ]
 
-  const handleExit = () => {
-    setSelectedProject(null)
-    router.push("/")
-  }
+  const planningItems = [
+    { label: "Dashboard", href: "/planning", icon: Home },
+    { label: "Progress", href: "/planning/progress", icon: TrendingUp },
+    { label: "S-Curve", href: "/planning/scurve", icon: PieChart },
+    { label: "Manpower", href: "/planning/resources", icon: Users },
+    { label: "Risk Register", href: "/planning/risk", icon: AlertCircle },
+    { label: "Cashflow", href: "/planning/financials", icon: DollarSign },
+    { label: "Variation Orders", href: "/planning/variation-orders", icon: BookOpen },
+    { label: "Payment Tracker", href: "/planning/payment-tracker", icon: DollarSign },
+  ]
+
+  // Determine active menu based on path
+  const isPlanning = pathname?.startsWith("/planning")
+  const menuItems = isPlanning ? planningItems : designItems
 
   return (
     <aside className="w-64 border-r border-slate-200 bg-white h-screen overflow-y-auto flex flex-col flex-shrink-0">
       <div className="p-6 border-b border-slate-200">
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
             <Cube className="w-5 h-5 text-white" />
           </div>
           <h1 className="font-bold text-slate-900">BuildSync</h1>
@@ -95,7 +65,10 @@ export function Sidebar() {
           <div className="bg-slate-50 p-3 rounded-lg border border-slate-200">
             <div className="text-xs font-semibold text-slate-600 mb-1">Active Project</div>
             <div className="font-bold text-slate-900 text-sm">{selectedProject.name}</div>
-            <div className="text-xs text-slate-600">{selectedProject.code}</div>
+            <div className="text-xs text-slate-600 mb-2">{selectedProject.code}</div>
+            <div className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-200 text-slate-800 uppercase">
+              {isPlanning ? "Planning" : "Design"} Mode
+            </div>
           </div>
         )}
       </div>

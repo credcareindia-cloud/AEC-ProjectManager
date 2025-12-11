@@ -1,70 +1,98 @@
 "use client"
 
-import { useState } from "react"
+import { LandingParticles } from "@/components/landing-particles"
 import { Card } from "@/components/ui/card"
-import { ProjectSelectionModal } from "@/components/project-selection-modal"
-import { Layers3, MapPin } from "lucide-react"
-import { useProject } from "@/lib/project-context"
+import { useRouter } from "next/navigation"
+import { Paintbrush, Ruler, ArrowRight, Activity } from "lucide-react"
+import { motion } from "framer-motion"
 
 export default function LandingPage() {
-  const { projects } = useProject()
-  const [selectedProject, setSelectedProject] = useState<string | null>(null)
+  const router = useRouter()
+
+  const handleModeSelect = (mode: "design" | "planning") => {
+    router.push(`/projects?mode=${mode}`)
+  }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="border-b border-slate-200 bg-white sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-2">
-          <div className="w-8 h-8 bg-slate-800 rounded-lg flex items-center justify-center">
-            <Layers3 className="w-5 h-5 text-white" />
-          </div>
-          <h1 className="text-xl font-bold text-slate-900">BuildSync</h1>
-        </div>
-      </header>
+    <div className="relative min-h-screen overflow-hidden text-white">
+      <LandingParticles />
 
-      {/* Main */}
-      <main className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold text-slate-900 mb-2">Projects</h2>
-          <p className="text-slate-600">Select a project to get started</p>
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6">
+        <div className="text-center mb-16 space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-white to-purple-400">
+              BuildSync
+            </h1>
+            <p className="text-xl text-slate-300 max-w-2xl mx-auto">
+              Advanced BIM Orchestration & Project Management Intelligence
+            </p>
+          </motion.div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {projects.map((project) => (
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl w-full">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <Card
-              key={project.id}
-              onClick={() => setSelectedProject(project.name)}
-              className="p-6 border-slate-200 hover:border-slate-400 hover:shadow-lg transition-all cursor-pointer"
+              onClick={() => handleModeSelect("design")}
+              className="group relative overflow-hidden p-8 h-80 bg-slate-900/50 border-slate-700 hover:border-blue-500 hover:bg-slate-900/80 transition-all cursor-pointer backdrop-blur-sm"
             >
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
-                  <Layers3 className="w-6 h-6 text-slate-700" />
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent group-hover:from-blue-600/20 transition-all" />
+
+              <div className="relative h-full flex flex-col justify-between">
+                <div>
+                  <div className="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <Paintbrush className="w-8 h-8 text-blue-400" />
+                  </div>
+                  <h2 className="text-3xl font-bold mb-2 text-white">Design</h2>
+                  <p className="text-slate-400">
+                    BIM Coordination, Clash Detection, LOIN/LOD, and Interface Management
+                  </p>
                 </div>
-                <span className="text-xs font-semibold text-slate-600 bg-slate-100 px-2 py-1 rounded">
-                  {project.code}
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2">{project.name}</h3>
-              <div className="space-y-2 mb-4">
-                <div className="flex items-center gap-2 text-sm text-slate-600">
-                  <MapPin className="w-4 h-4" />
-                  {project.location}
+
+                <div className="flex items-center gap-2 text-blue-400 font-semibold group-hover:translate-x-2 transition-transform">
+                  Enter Module <ArrowRight className="w-4 h-4" />
                 </div>
-                <div className="text-sm text-slate-600">Phase: {project.phase}</div>
-              </div>
-              <div className="pt-4 border-t border-slate-200 text-sm font-semibold text-slate-900">
-                Click to Enter →
               </div>
             </Card>
-          ))}
-        </div>
-      </main>
+          </motion.div>
 
-      <ProjectSelectionModal
-        isOpen={!!selectedProject}
-        projectName={selectedProject || ""}
-        onClose={() => setSelectedProject(null)}
-      />
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <Card
+              onClick={() => handleModeSelect("planning")}
+              className="group relative overflow-hidden p-8 h-80 bg-slate-900/50 border-slate-700 hover:border-emerald-500 hover:bg-slate-900/80 transition-all cursor-pointer backdrop-blur-sm"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/10 to-transparent group-hover:from-emerald-600/20 transition-all" />
+
+              <div className="relative h-full flex flex-col justify-between">
+                <div>
+                  <div className="w-16 h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <Ruler className="w-8 h-8 text-emerald-400" />
+                  </div>
+                  <h2 className="text-3xl font-bold mb-2 text-white">Planning</h2>
+                  <p className="text-slate-400">
+                    Progress Tracking, S-Curves, Resource Management, and Financials
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 text-emerald-400 font-semibold group-hover:translate-x-2 transition-transform">
+                  Enter Module <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+            </Card>
+          </motion.div>
+        </div>
+      </div>
     </div>
   )
 }
