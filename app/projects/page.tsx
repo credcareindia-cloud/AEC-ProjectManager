@@ -1,13 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Layers3, MapPin, ArrowLeft } from "lucide-react"
 import { useProject } from "@/lib/project-context"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 
-export default function ProjectsPage() {
+function ProjectsContent() {
     const { projects, setSelectedProject } = useProject()
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -101,5 +101,13 @@ export default function ProjectsPage() {
                 </div>
             </main>
         </div>
+    )
+}
+
+export default function ProjectsPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ProjectsContent />
+        </Suspense>
     )
 }
