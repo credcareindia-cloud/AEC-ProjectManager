@@ -91,6 +91,35 @@ export default function LandingPage() {
               </div>
             </Card>
           </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="md:col-span-2"
+          >
+            <Card
+              onClick={() => router.push("/adm-agent")}
+              className="group relative overflow-hidden p-8 bg-slate-900/50 border-slate-700 hover:border-indigo-500 hover:bg-slate-900/80 transition-all cursor-pointer backdrop-blur-sm flex items-center gap-8"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-transparent group-hover:from-indigo-600/20 transition-all" />
+
+              <div className="w-16 h-16 bg-indigo-500/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                <Activity className="w-8 h-8 text-indigo-400" />
+              </div>
+
+              <div className="flex-1">
+                <h2 className="text-2xl font-bold mb-2 text-white">ADM Agent</h2>
+                <p className="text-slate-400">
+                  AI-Powered Project Analysis. Upload XER/CSV files and get instant insights and dashboards.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2 text-indigo-400 font-semibold group-hover:translate-x-2 transition-transform">
+                Launch Agent <ArrowRight className="w-4 h-4" />
+              </div>
+            </Card>
+          </motion.div>
         </div>
       </div>
     </div>
