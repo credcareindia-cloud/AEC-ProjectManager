@@ -51,6 +51,11 @@ export function Sidebar() {
   const isPlanning = pathname?.startsWith("/planning")
   const menuItems = isPlanning ? planningItems : designItems
 
+  const handleExit = () => {
+    setSelectedProject(null)
+    router.push("/")
+  }
+
   return (
     <aside className="w-64 border-r border-slate-200 bg-white h-screen overflow-y-auto flex flex-col flex-shrink-0">
       <div className="p-6 border-b border-slate-200">
